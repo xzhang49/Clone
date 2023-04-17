@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Input from '../components/Input';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 const Auth = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [variant, setVariant] = useState('login');
 
     return (
         <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -40,6 +43,24 @@ const Auth = () => {
                                 onChange={(e: any) => setPassword(e.targer.value)}
                              />
                         </div>
+                        <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+                            Login
+                        </button>
+                        <div className="flex flex-row items-center gap-4 mt-8 justify-center">
+                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
+                                <FcGoogle size={32} />
+                            </div>
+                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
+                                <FaGithub size={32} />
+                            </div>
+                        </div>
+                        <p className="text-neutral-500 mt-12">
+                            First time using Netflix?
+                            <span className="text-white ml-1 hover:underline cursor-pointer">
+                                Create an account
+                            </span>
+                            .
+                        </p>
                     </div>
                 </div>
             </div>
