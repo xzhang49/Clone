@@ -1,9 +1,15 @@
 import React, { useState, useCallback } from "react";
+import axios from 'axios';
+import { NextPageContext } from 'next';
+import { getSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import Input from '../components/Input';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 
 const Auth = () => {
+    const router = useRouter();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,7 +18,36 @@ const Auth = () => {
 
     const toggleVariant = useCallback(() => {
         setVariant((currentVariant) => currentVariant === 'login' ? 'register' : 'login');
-    }, [])
+    }, []);
+
+    const login = useCallback(async () => {
+        try {
+          await signIn('credentials', {
+            email,
+            password,
+            redirect: false,
+            callbackUrl: '/'
+          });
+    
+          router.push('/profiles');
+        } catch (error) {
+          console.log(error);
+        }
+    }, [email, password, router]);
+
+    const register = useCallback(async () => {
+        try {
+          await axios.post('/api/register', {
+            email,
+            name,
+            password
+          });
+    
+          login();
+        } catch (error) {
+            console.log(error);
+        }
+    }, [email, name, password, login]);
 
     return (
         <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
